@@ -5,6 +5,9 @@ from .forms import ProveedorForm, ProductoForm
 
 # Create your views here.
 
+def index(request):
+    return render(request, 'index.html')
+
 def agregar_producto (request):
     form = ProductoForm()
 
@@ -12,7 +15,7 @@ def agregar_producto (request):
         form = ProductoForm(request.POST)
         if form.is_valid():
             form.save()
-            print("Producto Agregado")
+            form = ProductoForm()
         else:
             print("No se pudo agregar el producto")
 
@@ -27,10 +30,11 @@ def agregar_proveedor(request):
         form = ProveedorForm(request.POST)
         if form.is_valid():
             form.save()
+            form = ProveedorForm()
         else:
             print ("No se pudo agregar el proveedor")
-
     return render(request, 'agregar_proveedor.html', {'form': form, 'submit': 'Agregar Proveedor'})
+
 
 def productos(request):
     productos = Producto.objects.all();
